@@ -13,3 +13,6 @@ se desarrollaran servicios como:
 
 ### Alcance
 El MVP para este proyecto esta dado en la entrega de los servicios anteriores reflejados en el FrontEnd
+
+### Postman
+[Enlace a las pruebas con Postman](https://universal-meadow-360014.postman.co/workspace/Universidad~596f047b-68f3-4dfd-b60f-10e010c95e9e/collection/8924365-18f2d431-3e75-443a-970e-5d438e5c4093?action=share&creator=8924365)
