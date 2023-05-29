@@ -4,6 +4,7 @@ import com.restaurante.mimenu.dao.IProductoDao;
 import com.restaurante.mimenu.entity.Producto;
 
 import com.restaurante.mimenu.service.interf.IProductoService;
+import org.springdoc.api.OpenApiResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,8 +31,14 @@ public class ProductoServiceImpl implements IProductoService {
     }
 
     @Override
-    public Producto updateProducto(Producto producto) {
-        return iProductoDao.save(producto);
+    public Producto updateProducto(Long id, Producto producto) {
+        Producto producto1 = iProductoDao.findById(id)
+                .orElseThrow(() -> new OpenApiResourceNotFoundException("Producto"));
+        producto1.setNombre(producto.getNombre());
+        producto1.setDescripcion(producto.getDescripcion());
+        producto1.setPrecio(producto.getPrecio());
+        producto1.setImagen(producto.getImagen());
+        return iProductoDao.save(producto1);
     }
 
     @Override
@@ -51,7 +58,7 @@ public class ProductoServiceImpl implements IProductoService {
     }
 
     @Override
-    public void save(Producto producto) {
-        iProductoDao.save(producto);
+    public Producto save(Producto producto) {
+        return iProductoDao.save(producto);
     }
 }

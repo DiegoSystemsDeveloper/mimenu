@@ -10,7 +10,7 @@ public interface IProductoService {
 
     Producto findById(Long id);
 
-    Producto updateProducto(Producto producto);
+    Producto updateProducto(Long id, Producto producto);
 
     void deleteProducto(Producto producto);
 
@@ -18,5 +18,5 @@ public interface IProductoService {
 
     void deleteProducto(Long id);
 
-    void save(Producto producto);
+    Producto save(Producto producto);
 }
