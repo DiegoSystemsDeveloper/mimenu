@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.Optional;
 
 public interface IProductoDao extends CrudRepository<Producto, Long> {
-    Optional<Producto> findProductoById(Long id);
+    Optional<Producto> findById(Long id);
 }

@@ -3,62 +3,58 @@ package com.restaurante.mimenu.service.impl;
 import com.restaurante.mimenu.dao.IProductoDao;
 import com.restaurante.mimenu.entity.Producto;
 
+import com.restaurante.mimenu.exception.DataNotFoundException;
 import com.restaurante.mimenu.service.interf.IProductoService;
-import org.springdoc.api.OpenApiResourceNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.restaurante.mimenu.web.Dto.ProductoDto;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 @Service
 public class ProductoServiceImpl implements IProductoService {
 
-    @Autowired
-    private IProductoDao iProductoDao;
+    private final IProductoDao iProductoDao;
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<Producto> findAll() {
-        return (List<Producto>) iProductoDao.findAll();
+    private final ModelMapper modelMapper;
+
+    public ProductoServiceImpl(IProductoDao iProductoDao, ModelMapper modelMapper) {
+        this.iProductoDao = iProductoDao;
+        this.modelMapper = modelMapper;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Producto findById(Long id) {
-        return iProductoDao.findById(id).orElse(null);
+    public List<ProductoDto> findAll() {
+        return StreamSupport.stream(iProductoDao.findAll().spliterator(), false)
+                .map(producto -> modelMapper.map(producto, ProductoDto.class))
+                .toList();
     }
 
     @Override
-    public Producto updateProducto(Long id, Producto producto) {
-        Producto producto1 = iProductoDao.findById(id)
-                .orElseThrow(() -> new OpenApiResourceNotFoundException("Producto"));
-        producto1.setNombre(producto.getNombre());
-        producto1.setDescripcion(producto.getDescripcion());
-        producto1.setPrecio(producto.getPrecio());
-        producto1.setImagen(producto.getImagen());
-        return iProductoDao.save(producto1);
-    }
+    public ProductoDto updateProducto(Long id, ProductoDto productoDto) {
+        Producto producto = iProductoDao.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("No se encontro un producto con ese ID"));
+        Producto productoRequest = modelMapper.map(productoDto, Producto.class);
+        producto.setNombre(productoRequest.getNombre());
+        producto.setDescripcion(productoRequest.getDescripcion());
+        producto.setPrecio(productoRequest.getPrecio());
+        producto.setImagen(productoRequest.getImagen());
 
-    @Override
-    public void deleteProducto(Producto producto) {
-        iProductoDao.deleteById(producto.getId());
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Optional<Producto> findProductoById(Long id) {
-        return iProductoDao.findProductoById(id);
+        return modelMapper.map(iProductoDao.save(producto), ProductoDto.class);
     }
 
     @Override
     public void deleteProducto(Long id) {
+        iProductoDao.findById(id).orElseThrow(() -> new DataNotFoundException("No se encontro un producto con ese ID"));
         iProductoDao.deleteById(id);
     }
 
     @Override
-    public Producto save(Producto producto) {
-        return iProductoDao.save(producto);
+    public ProductoDto save(ProductoDto productoDto) {
+        Producto productoRequest = modelMapper.map(productoDto, Producto.class);
+        return modelMapper.map(iProductoDao.save(productoRequest), ProductoDto.class);
     }
 }

@@ -2,6 +2,7 @@ package com.restaurante.mimenu.entity;
 
 import jakarta.persistence.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -77,5 +78,6 @@ public class Producto implements Serializable {
         return createAt;
     }
 
+    @Serial
     private static final long serialVersionUID = 1L;
 }
