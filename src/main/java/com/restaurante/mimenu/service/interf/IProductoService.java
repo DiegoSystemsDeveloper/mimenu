@@ -1,6 +1,6 @@
 package com.restaurante.mimenu.service.interf;
 
-import com.restaurante.mimenu.web.Dto.ProductoDto;
+import com.restaurante.mimenu.web.dto.ProductoDto;
 
 import java.util.List;
 

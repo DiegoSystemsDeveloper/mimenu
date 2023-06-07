@@ -1,7 +1,7 @@
 package com.restaurante.mimenu.web.controller;
 
 import com.restaurante.mimenu.service.interf.IProductoService;
-import com.restaurante.mimenu.web.Dto.ProductoDto;
+import com.restaurante.mimenu.web.dto.ProductoDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

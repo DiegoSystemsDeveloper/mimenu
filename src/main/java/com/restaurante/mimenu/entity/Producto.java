@@ -1,6 +1,8 @@
 package com.restaurante.mimenu.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -13,12 +15,15 @@ public class Producto implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
+    @NotBlank
     @Column(name = "nombre", nullable = false, length = 50)
     private String nombre;
-
+    @NotNull
+    @NotBlank
     @Column(name = "descripcion", nullable = false, length = 2000)
     private String descripcion;
-
+    @NotNull
     @Column(name = "precio", nullable = false)
     private float precio;
 

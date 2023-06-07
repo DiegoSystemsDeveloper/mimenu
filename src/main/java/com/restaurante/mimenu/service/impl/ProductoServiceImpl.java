@@ -5,7 +5,7 @@ import com.restaurante.mimenu.entity.Producto;
 
 import com.restaurante.mimenu.exception.DataNotFoundException;
 import com.restaurante.mimenu.service.interf.IProductoService;
-import com.restaurante.mimenu.web.Dto.ProductoDto;
+import com.restaurante.mimenu.web.dto.ProductoDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
